@@ -1,4 +1,4 @@
-=0.0.1
+# 0.0.1
 + HillClimbing Algorithm to find "best" suitable configuration
 + ConfigDefinition can be defined to explain EMU which of the config lines can be replaced with what values
 + creates a score.txt file to save all scored solutions
