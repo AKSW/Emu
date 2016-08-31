@@ -235,7 +235,7 @@ public class EmuHillClimber {
 			else{
 				cvec = recombineTwo(cvecs.get(i), cvecs.get(i+1));
 			}
-			if(!checkCVContainCached(cvecs, cvec)&&ret.contains(cvec)){
+			if(checkCVContainCached(cvecs, cvec)||ret.contains(cvec)){
 				cvec = mutateSafe(cvec, cdef, cvecs);
 			}
 			if(cvec!=null){
