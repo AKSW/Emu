@@ -1,0 +1,100 @@
+SELECT * WHERE  {  { ?s ?p ?o }   UNION    { GRAPH ?g      { ?s ?p ?o }    }  } LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT * WHERE  { GRAPH ?g    { ?s rdf:type ?o }  } LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT * WHERE  { ?s rdf:type ?o .   ?o ?p ?o2  } LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT * WHERE  { ?s rdf:type ?o   OPTIONAL    { ?o ?p ?x }  } LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT * WHERE  {  { ?s rdf:type ?o }   UNION    { ?o rdf:type ?x }  } LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT * WHERE  { ?s rdf:type ?o } ORDER BY ASC(?s) LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT * WHERE  { ?s rdf:type ?o } ORDER BY DESC(?s) LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?v WHERE  { ?s rdf:type ?v } ORDER BY ?v LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?v WHERE  { ?s rdf:type ?v } ORDER BY ?v OFFSET 101 LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT (avg(?o) AS ?avg) WHERE  { ?s rdf:type ?o } LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?z WHERE  { ?s rdf:type ?o   BIND(( ?o + 10 ) AS ?z)  } LIMIT  100 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT * WHERE  { ?p rdf:type ?type   FILTER NOT EXISTS {?p owl:sameAs ?same }  } LIMIT  100 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT * WHERE  { ?s rdf:type xsd:integer   FILTER ( abs(?num) >= 2 )  } LIMIT  100 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?s ?str WHERE  { ?s ?p ?str   FILTER contains(?str, "a")  } LIMIT  100 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT * WHERE  { ?p rdf:type ?type   FILTER EXISTS {?p owl:sameAs ?same }  } LIMIT  100 
+SELECT ?s ?str WHERE  { ?s ?p ?str   FILTER strstarts(str(?str), "1")  } 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT (max(?o) AS ?max) WHERE  { ?s rdf:type ?o } LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?s (min(?o) AS ?min) WHERE  { ?s rdf:type ?o } GROUP BY ?s LIMIT  100 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT * WHERE  { ?p rdf:type ?type   MINUS    { ?p owl:sameAs ?same }  } LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT * WHERE  { ?p (rdf:type)* ?z } LIMIT  100 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?s ?o1 ?o2 WHERE  { ?s owl:sameAs ?o1   SERVICE <http://dbpedia.org/sparql>    { ?o1 rdf:type ?o2 }  } LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?x ?p WHERE  { GRAPH ?g    { { SELECT *      WHERE       { ?x rdf:type ?y }     }    }  } LIMIT  100 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?x WHERE  { { SELECT *    WHERE     { ?x rdf:type ?y }   }  } LIMIT  100 
+PREFIX :   <http://www.example.org/> SELECT ?s (sum(?o) AS ?sum) WHERE  { ?s ?p ?o } GROUP BY ?s LIMIT  100 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?p WHERE  { ?p rdf:type ?o } VALUES ?o { owl:Thing } 
+PREFIX :   <http://www.example.org/> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> SELECT ?s (avg(?o) AS ?avg) WHERE  { ?s rdf:type ?o } GROUP BY ?s HAVING ( avg(?o) <= 2.0 ) LIMIT  100 
+PREFIX :   <http://www.example.org> SELECT ?P (count(?O) AS ?C) WHERE  { ?S ?P ?O } GROUP BY ?P LIMIT  100 
+SELECT ?s ?p ?o WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT ("foo" AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (( 1 + 2 ) AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT * WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (count(?p) AS ?n) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (max(?p) AS ?max) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (sample(?p) AS ?sam) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT ?s ?p ?o WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT ("foo" AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (( 1 + 2 ) AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT * WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (count(?p) AS ?n) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (max(?p) AS ?max) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (sample(?p) AS ?sam) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT ?s ?p ?o WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT ("foo" AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (( 1 + 2 ) AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT * WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (count(?p) AS ?n) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (max(?p) AS ?max) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (sample(?p) AS ?sam) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT ?s ?p ?o WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT ("foo" AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (( 1 + 2 ) AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT * WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (count(?p) AS ?n) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (max(?p) AS ?max) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (sample(?p) AS ?sam) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT ?s ?p ?o WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT ("foo" AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (( 1 + 2 ) AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT * WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (count(?p) AS ?n) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (max(?p) AS ?max) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (sample(?p) AS ?sam) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT ?s ?p ?o WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT ("foo" AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (( 1 + 2 ) AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT * WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (count(?p) AS ?n) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (max(?p) AS ?max) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (sample(?p) AS ?sam) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX foaf: <http://xmlns.com/foaf/0.1/> SELECT DISTINCT ?name ?homepage ?mbox_sha1sum ?page ?sameAs ?seeAlso WHERE  { <http://data.semanticweb.org/person/laszlo-toeroek> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> foaf:Person    { <http://data.semanticweb.org/person/laszlo-toeroek> foaf:name ?name }   UNION    { <http://data.semanticweb.org/person/laszlo-toeroek> rdfs:label ?name }   OPTIONAL    { <http://data.semanticweb.org/person/laszlo-toeroek> foaf:mbox_sha1sum ?mbox_sha1sum }   OPTIONAL    { <http://data.semanticweb.org/person/laszlo-toeroek> foaf:homepage ?homepage }   OPTIONAL    { <http://data.semanticweb.org/person/laszlo-toeroek> foaf:page ?page }   OPTIONAL    { <http://data.semanticweb.org/person/laszlo-toeroek> owl:sameAs ?sameAs }   OPTIONAL    { <http://data.semanticweb.org/person/laszlo-toeroek> rdfs:seeAlso ?seeAlso }  } 
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> PREFIX swrc: <http://swrc.ontoware.org/ontology#> PREFIX foaf: <http://xmlns.com/foaf/0.1/> PREFIX swc: <http://data.semanticweb.org/ns/swc/ontology#> SELECT DISTINCT ?affiliation_url ?affiliation_name ?event_uri ?event_acronym ?prefLabel WHERE  { GRAPH ?g    { <http://data.semanticweb.org/person/laszlo-toeroek> swrc:affiliation ?affiliation_url }   ?affiliation_url foaf:name ?affiliation_name .   ?event_uri swc:completeGraph ?g .   ?event_uri swc:hasAcronym ?event_acronym   OPTIONAL    { ?affiliation_url skos:prefLabel ?prefLabel }  } ORDER BY ?event_acronym 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX dct: <http://purl.org/dc/terms/> PREFIX foaf: <http://xmlns.com/foaf/0.1/> PREFIX swc: <http://data.semanticweb.org/ns/swc/ontology#> PREFIX dc:  <http://purl.org/dc/elements/1.1/> SELECT DISTINCT ?publication_url ?publication_name ?event_uri ?event_acronym WHERE  { GRAPH ?g    {  { <http://data.semanticweb.org/person/laszlo-toeroek> foaf:made ?publication_url }     UNION      { ?publication_url foaf:maker <http://data.semanticweb.org/person/laszlo-toeroek> }     UNION      { ?publication_url dct:creator <http://data.semanticweb.org/person/laszlo-toeroek> }      { ?publication_url dct:title ?publication_name }     UNION      { ?publication_url rdfs:label ?publication_name }    }   ?event_uri swc:completeGraph ?g .   ?event_uri swc:hasAcronym ?event_acronym  } ORDER BY ?event_acronym 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX swc: <http://data.semanticweb.org/ns/swc/ontology#> SELECT DISTINCT ?event_uri ?event_acronym ?role_uri ?role_label WHERE  { GRAPH ?g    {  { <http://data.semanticweb.org/person/laszlo-toeroek> swc:holdsRole ?role_uri }     UNION      { ?role_uri swc:heldBy <http://data.semanticweb.org/person/laszlo-toeroek> }     ?role_uri rdfs:label ?role_label    }   ?event_uri swc:completeGraph ?g .   ?event_uri swc:hasAcronym ?event_acronym  } ORDER BY ?event_acronym 
+SELECT ?s ?p ?o WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT ("foo" AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (( 1 + 2 ) AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT * WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (count(?p) AS ?n) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (max(?p) AS ?max) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (sample(?p) AS ?sam) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT ?s ?p ?o WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT ("foo" AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (( 1 + 2 ) AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT * WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (count(?p) AS ?n) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (max(?p) AS ?max) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (sample(?p) AS ?sam) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT ?s ?p ?o WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT ("foo" AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (( 1 + 2 ) AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT * WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (count(?p) AS ?n) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (max(?p) AS ?max) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (sample(?p) AS ?sam) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT ?s ?p ?o WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT ("foo" AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (( 1 + 2 ) AS ?bar) WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT * WHERE  { ?s ?p ?o } LIMIT  1 
+SELECT (count(?p) AS ?n) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 
+SELECT (max(?p) AS ?max) ?o WHERE  { <http://data.semanticweb.org/ns/swc/ontology> ?p ?o } GROUP BY ?o 

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iguana xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<databases main="dbpedia">
+		<database id="virtuoso" type="impl">
+			<endpoint uri="http://localhost:8890/sparql" />
+			<user value="dba" />
+			<pwd value="dba" />
+		</database>
+		<database id="dbpedia" type="impl">
+			<endpoint uri="http://dbpedia.org/sparql"/>
+		</database>
+	</databases>
+
+	<suite>
+		<drop-db value="false" />
+		<query-diversity value="2000" />
+		<graph-uri name="http://dbpedia.org" />
+		<random-function type="RandomTriple" generate="false">
+			<percent value="1.0" file-name="dbpedia2/" />
+		</random-function>
+		
+		<number-of-triples value="9"/>
+		<warmup time="0" file-name="warmup.txt" />
+		<test-db type="choose" reference="dbpedia">
+			<db id="virtuoso" />
+		</test-db>
+		<testcases>
+<!-- 			<testcase class="org.aksw.iguana.testcases.StressTestcase"> -->
+<!-- 				<property name="sparql-user" value="2" /> -->
+				
+<!-- 				<property name="update-user" value="1" /> -->
+<!-- 				<property name="number-of-triples" value="9" /> -->
+<!-- 				<property name="queries-path" value="QUERIESPATH/queries.txt" /> -->
+<!-- 				<property name="linking-strategy" value="DI" /> -->
+<!-- 				<property name="is-pattern" value="false" /> -->
+<!-- 				<property name="update-path" value="changeset" /> -->
+<!-- 				<property name="worker-strategy0" value="NEXT" /> -->
+<!-- 				<property name="update-strategy" value="VARIABLE" /> -->
+<!-- 				<property name="timelimit" value="60000" /> -->
+<!-- 			</testcase> -->
+<!-- 			<testcase class="org.aksw.iguana.testcases.CompletenessTestcase"> -->
+<!-- 				<property name="query-file" value="queries.txt" /> -->
+<!-- 			</testcase> -->
+<!--    		  <testcase class="org.aksw.iguana.testcases.StressTestcase"> -->
+<!--                 <property name="sparql-user" value="1"/> -->
+<!--                 <property name="update-user" value="0"/> -->
+<!--                 <property name="latency-amount0" value="20"/> -->
+<!-- 				<property name="latency-strategy0" value="VARIABLE"/> -->
+<!--                 <property name="queries-path" value="queries.txt"/> -->
+<!--                 <property name="is-pattern" value="false" /> -->
+<!--                 <property name="timelimit" value="60000"/> -->
+<!--                 <property name="no-of-query-mixes" value="1"/> -->
+<!--            </testcase>	 -->
+ 		<testcases testcase-pre="./testcasePre.sh" testcase-post="./testcasePost.sh">
+            <testcase class="org.aksw.iguana.testcases.StressTestcase">
+                <property name="sparql-user" value="1" />
+                <property name="update-user" value="0" />
+                <property name="queries-path" value="queries.txt" />
+                <property name="is-pattern" value="false" />
+                <property name="timelimit" value="%timeLimit" />
+            </testcase>
+            <testcase class="org.aksw.iguana.testcases.StressTestcase">
+                <property name="sparql-user" value="2" />
+                <property name="update-user" value="0" />
+                <property name="queries-path" value="queries.txt" />
+                <property name="is-pattern" value="false" />
+                <property name="timelimit" value="%timeLimit" />
+            </testcase>
+        </testcases>
+		</testcases>
+	</suite>
+
+
+</iguana>
+
