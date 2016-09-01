@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,7 +28,6 @@ import org.aksw.emu.score.ScoreCalculator;
 import org.aksw.emu.utils.comparator.ConfigVectorComparator;
 import org.aksw.iguana.benchmark.Benchmark;
 import org.aksw.iguana.utils.ShellProcessor;
-import org.apache.commons.lang.ArrayUtils;
 import org.xml.sax.SAXException;
 
 public class EmuHillClimber {
@@ -76,7 +74,6 @@ public class EmuHillClimber {
 		int i=0;
 		ConfigVector oldCvec = cvecs.get(0);
 		do{
-			//TODO rewrite so recombineSafe gives back n+1 cvecs
 			List<ConfigVector> recombined = recombineSafe(cvecs, cdef, combine);
 
 			calculateScores(recombined, cdef);
@@ -90,7 +87,7 @@ public class EmuHillClimber {
 			}
 			else{
 				oldCvec=cvecs.get(0);
-				i=1;
+				i=0;
 				System.out.println("run with change "+i);
 			}
 		}while(i<cancel);
@@ -181,7 +178,7 @@ public class EmuHillClimber {
 		do{
 			ret = mutate(old_c, cdef);
 			i++;
-			System.out.println("mutate try: "+i);
+//			System.out.println("mutate try: "+i);
 			old_c = ret;
 		}while(checkCVContainCached(cvecs, ret)&&cancel_mutations>=i);
 		if(cancel_mutations<i){
