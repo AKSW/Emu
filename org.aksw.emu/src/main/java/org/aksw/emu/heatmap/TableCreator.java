@@ -20,12 +20,12 @@ public class TableCreator {
 	private static List<String> rowNames = new LinkedList<String>();
 	
 	public static void main(String args[]) throws IOException, EmuException{
-		saveTable("heatmap.csv", createTable(ConfigDefinitionReader.readConfigDef("cdef.properties"), 
+		saveTable("heatmap", createTable(ConfigDefinitionReader.readConfigDef("cdef.properties"), 
 				createScoreMapFromScoreFile("scores.txt")));
 	}
 	
 	public static void saveTable(String output, List<List<Double>> table) throws IOException{
-		PrintWriter pw = new PrintWriter(output);
+		PrintWriter pw = new PrintWriter(output+".csv");
 
 		String row = "";
 		
@@ -39,6 +39,24 @@ public class TableCreator {
 			}
 			pw.println(row);
 		}
+		for(int i=0; i<table.size();i++){
+			List<Double> values = table.get(i);
+			row=rowNames.get(i)+"\t";
+			for(Double d : values){
+				row+=d+"\t";
+			}
+			pw.println(row);
+		}
+		pw.close();
+		pw = new PrintWriter(output+"_further-work.csv");
+
+		row = "Vars\t";
+		
+		for(String column : columnNames){
+			row+=column+"\t";
+		}
+		pw.println(row);
+		row="";
 		for(int i=0; i<table.size();i++){
 			List<Double> values = table.get(i);
 			row=rowNames.get(i)+"\t";
