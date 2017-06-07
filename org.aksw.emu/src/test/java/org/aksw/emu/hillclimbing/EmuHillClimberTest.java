@@ -7,11 +7,20 @@ import org.aksw.emu.config.ConfigDefinitionReader;
 import org.aksw.emu.config.ConfigVector;
 import org.aksw.emu.config.Var;
 import org.aksw.emu.exception.EmuException;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.Syntax;
 import org.junit.Test;
 
 public class EmuHillClimberTest {
 
-	@Test
+	 @Test
+	 public void bla(){
+		 Query q = QueryFactory.create("PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX  sn:   <http://sn.com/> PREFIX  foaf: <http://xmlns.com/foaf/0.1/> PREFIX  snvoc: <http://snvoc.com/>  SELECT  ?exp ?first ?last (GROUP_CONCAT(DISTINCT ?tagname ; separator=', ') AS ?tags) (COUNT(DISTINCT ?reply) AS ?cnt) WHERE   { sn:pers00000030786325582279               snvoc:knows  ?exp     OPTIONAL       { ?exp  snvoc:firstName  ?first }     OPTIONAL       { ?exp  snvoc:lastName  ?last }     ?reply    snvoc:hasCreator      ?exp ;               snvoc:replyOf         ?org_post .     ?org_post  a                    snvoc:Post ;               snvoc:hasTag          ?tag .     ?tag      foaf:name             ?tagname ;               a                     ?type .     ?type    (rdfs:subClassOf)* ?type1 .     ?type1  rdfs:label  \"MilitaryUnit\"   } GROUP BY ?exp ?first ?last ORDER BY DESC(?cnt) ?exp LIMIT   20");
+		 System.out.println(q);
+	 }
+	
+//	@Test
 	public void test2() throws EmuException{
 		EmuHillClimber climber = new EmuHillClimber();
 		ConfigDefinition cdef = ConfigDefinitionReader.readConfigDef("src/test/resources/exampleCdef.properties");
@@ -21,7 +30,7 @@ public class EmuHillClimberTest {
 		System.out.println(cvecs);
 	}
 	
-	@Test
+//	@Test
 	public void test(){
 		ConfigVector[] cvecs = new ConfigVector[4];
 		cvecs[0] = new ConfigVector();

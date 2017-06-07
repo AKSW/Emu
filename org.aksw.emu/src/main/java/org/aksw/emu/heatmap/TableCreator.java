@@ -43,28 +43,44 @@ public class TableCreator {
 			List<Double> values = table.get(i);
 			row=rowNames.get(i)+"\t";
 			for(Double d : values){
-				row+=d+"\t";
+				if(d>=0){
+					row+=d+"\t";
+				}else{
+					row+="\t";
+				}
 			}
 			pw.println(row);
 		}
 		pw.close();
 		pw = new PrintWriter(output+"_further-work.csv");
-
+		PrintWriter pw2 = new PrintWriter("heatmap_mapping.txt");
+		pw2.println("y, columns");
 		row = "Vars\t";
-		
+		int j=1;
 		for(String column : columnNames){
-			row+=column+"\t";
+			row+="´"+j+"\t";
+			pw2.println(j+"\t"+column.replace(",", "\t"));
+			j++;
 		}
+		j=1;
+		pw2.println("\nx, rows");
 		pw.println(row);
 		row="";
 		for(int i=0; i<table.size();i++){
 			List<Double> values = table.get(i);
-			row=rowNames.get(i)+"\t";
+			row=j+"\t";
+			pw2.println(j+"\t"+rowNames.get(i));
+			j++;
 			for(Double d : values){
-				row+=d+"\t";
+				if(d>=0){
+					row+=d+"\t";
+				}else{
+					row+="\t";
+				}
 			}
 			pw.println(row);
 		}
+		pw2.close();
 		pw.close();
 	}
 	
@@ -124,7 +140,7 @@ public class TableCreator {
 					columnNames.add(_columnN.replace("\t", "  "));
 				Double d = score.get(_rowN+", "+_columnN);
 				if(d==null)
-					d=0.;
+					d=-1.;
 				row.add(d);
 			}
 		}
